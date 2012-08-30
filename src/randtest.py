@@ -15,4 +15,4 @@ for i in range(0, 16):
 intlist.sort(reverse = True)
 
 for i in intlist:
-    print bin(i)
+    print "{:0>160}".format(str(bin(i)).replace("0b", ""))
