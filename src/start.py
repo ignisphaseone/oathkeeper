@@ -7,31 +7,19 @@ import hmac
 import hashlib
 from twisted.python.randbytes import secureRandom
 import time
+import struct
 
-d = secureRandom(20)
-print "--string representation of secure random (20 bytes):"
-print d
-print d.__class__
-print d.__sizeof__()
-i = int(d.encode('hex'), 16)
-print "--long representation of secure random (20 bytes):"
-print i
-print bin(i)
-print i.__class__
-t = int(time.time())
-print "--time since epoch:"
-print t
-print bin(t)
-print t.__class__
-print t.__sizeof__()
-print "--size of a set string 'blah':"
-s = "blah"
-print s
-print s.__class__
-print s.__sizeof__()
-print unicode(s)
-print unicode(s).__class__
-print unicode(s).__sizeof__()
-print "--attempted binary conversions of s (into ints?)"
-print s
-print bin(int(s.encode('hex'), 16))
+
+secret = bytes(secureRandom(20))
+print "{:->16}".format("secret bytes:"), secret
+print "{:->16}".format("secret int:"), int(secret.encode('hex'), 16)
+print "{:->16}".format("secret bin:"), "{:0>160}".format(str(bin(int(secret.encode('hex'), 16))).replace("0b", ""))
+mytime = int(time.time())
+print "{:->16}".format("time int:"), mytime
+datatime = struct.pack('>I', mytime)
+print "{:->16}".format("time bytes:"), datatime
+print "{:->16}".format("time int bin:"), "{:0>32}".format(str(bin(mytime)).replace("0b", ""))
+print "{:->16}".format("time bytes bin:"), "{:0>32}".format(str(bin(int(datatime.encode('hex'), 16))).replace("0b", ""))
+myhash = hmac.new(secret)
+myhash.update(datatime)
+print myhash.hexdigest()
