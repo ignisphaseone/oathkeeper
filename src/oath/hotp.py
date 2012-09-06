@@ -14,8 +14,9 @@ def cx_itoa(i):
     ob = binascii.unhexlify(ox)
     return ob
 
-def scribe(key, msg, digestmod = hashlib.sha1):
-    h = hmac.new(key, msg, digestmod)
+
+def scribe(key, i, digestmod=hashlib.sha1):
+    h = hmac.new(key, cx_itoa(i), digestmod)
     s = h.digest()
     offset = stoa(s[19]) & 0xf
     bin_code = (((stoa(s[offset]) & 0x7f) << 24)
