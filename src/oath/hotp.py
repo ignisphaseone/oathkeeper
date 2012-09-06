@@ -8,6 +8,12 @@ import hashlib
 import hmac
 
 
+class sentry():
+    def __init__(self, secret, digestmod=hashlib.sha1):
+        self.hasher = hmac.new(secret, digestmod)
+        pass
+
+
 def cx_itoa(i):
     ox = hex(long(i))[2:-1]
     ox = '0' * (16 - len(ox)) + ox
@@ -15,7 +21,7 @@ def cx_itoa(i):
     return ob
 
 
-def scribe(key, i, digestmod=hashlib.sha1):
+def keygen(key, i, digestmod=hashlib.sha1):
     h = hmac.new(key, cx_itoa(i), digestmod)
     s = h.digest()
     offset = stoa(s[19]) & 0xf
