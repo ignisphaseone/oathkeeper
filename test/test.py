@@ -4,7 +4,7 @@ Created on Sep 5, 2012
 @author: ApigeeCorporation
 '''
 import unittest
-from oath.hotp import sentry
+from oath.hotp import keygen
 import hashlib
 
 
@@ -29,7 +29,7 @@ class Test(unittest.TestCase):
     def test_oath_trunc(self):
         self.results = []
         for i in self.seq:
-            self.results.append(sentry(self.secret, i, hashlib.sha1))
+            self.results.append(keygen(self.secret, i, hashlib.sha1))
         for i in range(self.results.__len__()):
             print self.results[i], self.tests[i]
             self.assertEquals(self.results[i], self.tests[i],

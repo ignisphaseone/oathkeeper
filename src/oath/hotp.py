@@ -6,11 +6,11 @@ Created on Sep 5, 2012
 import binascii
 import hashlib
 import hmac
+from oath import core
 
 
-class sentry():
-    def __init__(self, secret, digestmod=hashlib.sha1):
-        self.hasher = hmac.new(secret, digestmod)
+class guard(core.keeper):
+    def __init__(self):
         pass
 
 

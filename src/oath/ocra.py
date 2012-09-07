@@ -1,5 +1,5 @@
-'''
-Created on Sep 6, 2012
+from oath import core
 
-@author: ignisphaseone
-'''
+
+class warden(core.keeper):
+    pass
