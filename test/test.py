@@ -4,7 +4,7 @@ Created on Sep 5, 2012
 @author: ApigeeCorporation
 '''
 import unittest
-from oath.hotp import keygen
+from oath.hotp import keygen, guard
 import hashlib
 
 
@@ -34,6 +34,16 @@ class Test(unittest.TestCase):
             print self.results[i], self.tests[i]
             self.assertEquals(self.results[i], self.tests[i],
                               "Hashes are not equal.")
+
+    def test_basic_init(self):
+        myguard = guard(self.secret, 0)
+        self.assertEqual(myguard.secret, self.secret,
+                         "myguard secrets do not match.")
+        myguard = guard(self.secret, 0, form="dec7")
+        self.assertEqual(myguard.secret, self.secret,
+                         "myguard secrets do not match.")
+        self.assertEqual(myguard.form, "dec7",
+                         "myguard forms do not match.")
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']

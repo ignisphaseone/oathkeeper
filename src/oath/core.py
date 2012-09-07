@@ -1,6 +1,7 @@
 class keeper():
     def __init__(self, secret, form="dec6"):
-        pass
+        self.secret = secret
+        self.form = form
 
     def sync(self):
         pass

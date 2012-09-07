@@ -10,9 +10,8 @@ from oath import core
 
 
 class guard(core.keeper):
-    def __init__(self, secret, form="dec6", counter):
-        self.secret = secret
-        self.form = form
+    def __init__(self, secret, counter, form="dec6"):
+        core.keeper.__init__(self, secret, form)
         self.counter = counter
         pass
 
