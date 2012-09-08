@@ -9,11 +9,14 @@ import hmac
 from oath import core
 
 
-class guard(core.keeper):
+class guardian(core.keeper):
     def __init__(self, secret, counter, form="dec6"):
         core.keeper.__init__(self, secret, form)
         self.counter = counter
         pass
+
+    def sync(self):
+        return self.counter
 
 
 def cx_itoa(i):
