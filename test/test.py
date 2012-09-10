@@ -25,7 +25,11 @@ class Test(unittest.TestCase):
             "399871",
             "520489",
             ]
-        pass
+        '''
+            Check test.db for SQLite here. Create it if not available.
+            Do not check for MySQL info here; that is an actual part of the
+            MySQL testing.
+        '''
 
     def test_oath_trunc(self):
         self.results = []
@@ -48,6 +52,10 @@ class Test(unittest.TestCase):
 
     def test_djinn(self):
         d = djinn('settings.cfg')
+        self.assertEqual(d.config.get('database', 'user'), "root",
+                         "'settings.cfg username does not match 'root'")
+        self.assertEqual(d.config.get('database', 'password'), "admin",
+                         "'settings.cfg password does not match 'admin'")
         d.db_connect()
 
 if __name__ == "__main__":

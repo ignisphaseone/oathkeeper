@@ -12,10 +12,7 @@ class djinn():
         pass
 
     def db_connect(self):
-        print self.config.get('database', 'user')
-        print self.config.get('database', 'password')
         db = self.config.get('database', 'db')
-        print db
         if db == "mysql":
             self.__mysql()
         elif db == "sqlite":
