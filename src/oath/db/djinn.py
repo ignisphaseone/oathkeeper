@@ -17,13 +17,14 @@ class djinn():
             self.__mysql()
         elif db == "sqlite":
             self.__sqlite()
+        else:
+            raise Exception
         pass
 
     def __mysql(self):
-        print 'Connecting to MySQL...'
+        pass
 
     def __sqlite(self):
-        print 'Connecting to SQLite...'
         fname = self.config.get('database', 'db.name')
         self.db = sqlite3.connect(fname)
         curr = self.db.cursor()

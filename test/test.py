@@ -52,10 +52,18 @@ class Test(unittest.TestCase):
 
     def test_djinn(self):
         d = djinn('settings.cfg')
+        print d.config.get('database', 'user'), "root"
         self.assertEqual(d.config.get('database', 'user'), "root",
                          "'settings.cfg username does not match 'root'")
+        print d.config.get('database', 'password'), "admin"
         self.assertEqual(d.config.get('database', 'password'), "admin",
                          "'settings.cfg password does not match 'admin'")
+        if d.config.get('database', 'db') == "sqlite":
+            print "Connecting to SQLite..."
+        elif d.config.get('database', 'db') == "mysql":
+            print "Connecting to MySQL..."
+        else:
+            self.assertRaises(Exception, d.db_connect())
         d.db_connect()
 
 if __name__ == "__main__":
