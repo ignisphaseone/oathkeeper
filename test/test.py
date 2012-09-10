@@ -6,6 +6,7 @@ Created on Sep 5, 2012
 import unittest
 from oath.hotp import keygen, guardian
 import hashlib
+from oath.db.djinn import djinn
 
 
 class Test(unittest.TestCase):
@@ -44,6 +45,10 @@ class Test(unittest.TestCase):
                          "myguard secrets do not match.")
         self.assertEqual(myguard.form, "dec7",
                          "myguard forms do not match.")
+
+    def test_djinn(self):
+        d = djinn('settings.cfg')
+        d.db_connect()
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
