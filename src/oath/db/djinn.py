@@ -1,4 +1,5 @@
 import ConfigParser
+import sqlite3
 
 
 class djinn():
@@ -16,10 +17,22 @@ class djinn():
         db = self.config.get('database', 'db')
         print db
         if db == "mysql":
-            print 'Connecting to MySQL...'
+            self.__mysql()
         elif db == "sqlite":
-            print 'Connecting to SQLite...'
+            self.__sqlite()
         pass
+
+    def __mysql(self):
+        print 'Connecting to MySQL...'
+
+    def __sqlite(self):
+        print 'Connecting to SQLite...'
+        fname = self.config.get('database', 'db.name')
+        self.db = sqlite3.connect(fname)
+        curr = self.db.cursor()
+        curr.execute("ANALYZE sqlite_master")
+        self.db.commit()
+        self.db.close()
 
 
 def get_guard():
