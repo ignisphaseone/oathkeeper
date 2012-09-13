@@ -1,5 +1,6 @@
 import ConfigParser
 import sqlite3
+from sqlite3 import OperationalError
 
 
 class djinn():
@@ -28,7 +29,14 @@ class djinn():
         fname = self.config.get('database', 'db.name')
         self.db = sqlite3.connect(fname)
         curr = self.db.cursor()
-        curr.execute("ANALYZE sqlite_master")
+        try:
+            curr.execute("CREATE TABLE user (uname, pass, secret, counter)")
+        except OperationalError:
+            curr.execute("""DELETE FROM user WHERE uname is 'ignis'""")
+            curr.execute("""INSERT INTO user VALUES
+                ('ignis','secret','12345678901234567890', 0)""")
+            for row in curr.execute("SELECT * FROM user"):
+                print row
         self.db.commit()
         self.db.close()
 
@@ -41,11 +49,11 @@ class djinn():
     def get_sentry(self):
         pass
 
-    def save_guardian(self):
+    def save_guardian(self, g):
         pass
 
-    def save_warden(self):
+    def save_warden(self, w):
         pass
 
-    def save_sentry(self):
+    def save_sentry(self, s):
         pass

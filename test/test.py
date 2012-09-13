@@ -51,7 +51,7 @@ class Test(unittest.TestCase):
                          "myguard forms do not match.")
 
     def test_djinn(self):
-        d = djinn('settings.cfg')
+        d = djinn('test/settings.cfg')
         print d.config.get('database', 'user'), "root"
         self.assertEqual(d.config.get('database', 'user'), "root",
                          "'settings.cfg username does not match 'root'")
@@ -65,6 +65,9 @@ class Test(unittest.TestCase):
         else:
             self.assertRaises(Exception, d.db_connect())
         d.db_connect()
+
+    def test_auth(self):
+        pass
 
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
