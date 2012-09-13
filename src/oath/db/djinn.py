@@ -32,26 +32,20 @@ class djinn():
         self.db.commit()
         self.db.close()
 
+    def get_guardian(self):
+        pass
 
-def get_guardian():
-    pass
+    def get_warden(self):
+        pass
 
+    def get_sentry(self):
+        pass
 
-def get_warden():
-    pass
+    def save_guardian(self):
+        pass
 
+    def save_warden(self):
+        pass
 
-def get_sentry():
-    pass
-
-
-def save_guardian():
-    pass
-
-
-def save_warden():
-    pass
-
-
-def save_sentry():
-    pass
+    def save_sentry(self):
+        pass
