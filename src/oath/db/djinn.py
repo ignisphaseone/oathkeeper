@@ -33,7 +33,7 @@ class djinn():
         self.db.close()
 
 
-def get_guard():
+def get_guardian():
     pass
 
 
@@ -45,7 +45,7 @@ def get_sentry():
     pass
 
 
-def save_guard():
+def save_guardian():
     pass
 
 
