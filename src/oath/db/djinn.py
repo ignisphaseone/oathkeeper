@@ -30,11 +30,11 @@ class djinn():
         self.db = sqlite3.connect(fname)
         curr = self.db.cursor()
         try:
-            curr.execute("CREATE TABLE user (uname, pass, secret, counter)")
+            curr.execute("CREATE TABLE user (uname, type, pass, secret, counter)")
         except OperationalError:
             curr.execute("""DELETE FROM user WHERE uname is 'ignis'""")
             curr.execute("""INSERT INTO user VALUES
-                ('ignis','secret','12345678901234567890', 0)""")
+                ('ignis','guardian','secret','12345678901234567890', 0)""")
             for row in curr.execute("SELECT * FROM user"):
                 print row
         self.db.commit()
