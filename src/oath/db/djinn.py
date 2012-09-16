@@ -1,6 +1,7 @@
 import ConfigParser
 import sqlite3
 from sqlite3 import OperationalError
+from oath.hotp import guardian
 
 
 class djinn():
@@ -28,15 +29,18 @@ class djinn():
     def __sqlite(self):
         fname = self.config.get('database', 'db.name')
         self.db = sqlite3.connect(fname)
+        self.db.row_factory = sqlite3.Row
         curr = self.db.cursor()
         try:
-            curr.execute("CREATE TABLE user (uname, type, pass, secret, counter)")
+            curr.execute("CREATE TABLE user (uname, pass, type, secret, counter)")
         except OperationalError:
             curr.execute("""DELETE FROM user WHERE uname is 'ignis'""")
             curr.execute("""INSERT INTO user VALUES
-                ('ignis','guardian','secret','12345678901234567890', 0)""")
+                ('ignis','secret','guardian','12345678901234567890', 0)""")
             for row in curr.execute("SELECT * FROM user"):
-                print row
+                print row.keys()
+                for member in row:
+                    print member
         self.db.commit()
         self.db.close()
 
