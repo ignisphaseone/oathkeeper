@@ -2,6 +2,8 @@ import ConfigParser
 import sqlite3
 from sqlite3 import OperationalError
 from oath.hotp import guardian
+import hmac
+import hashlib
 
 
 class djinn():
@@ -30,34 +32,27 @@ class djinn():
         fname = self.config.get('database', 'db.name')
         self.db = sqlite3.connect(fname)
         self.db.row_factory = sqlite3.Row
+
+    def clear_db(self):
         curr = self.db.cursor()
-        try:
-            curr.execute("CREATE TABLE user (uname, pass, type, secret, counter)")
-        except OperationalError:
-            curr.execute("""DELETE FROM user WHERE uname is 'ignis'""")
-            curr.execute("""INSERT INTO user VALUES
-                ('ignis','secret','guardian','12345678901234567890', 0)""")
-            for row in curr.execute("SELECT * FROM user"):
-                print row.keys()
-                for member in row:
-                    print member
+        curr.execute("""
+            DELETE FROM user WHERE uname
+        """)
         self.db.commit()
+
+    def __close_db(self):
         self.db.close()
 
-    def get_guardian(self):
+    def get_keeper(self, uname, passwd):
+        curr = self.db.cursor()
+        curr.execute("""
+            SELECT * FROM user WHERE uname = (?)
+        """, uname)
         pass
 
-    def get_warden(self):
-        pass
-
-    def get_sentry(self):
-        pass
-
-    def save_guardian(self, g):
-        pass
-
-    def save_warden(self, w):
-        pass
-
-    def save_sentry(self, s):
-        pass
+    def put_keeper(self, uname, passwd, type, secret, form):
+        curr = self.db.cursor()
+        hspasswd = hmac.new(secret, passwd, hashlib.sha1)
+        curr.execute("""
+            INSERT INTO user VALUES (?,?,?,?,?)
+        """, uname, hspasswd, type, secret, form)

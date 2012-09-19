@@ -7,6 +7,7 @@ import unittest
 from oath.hotp import keygen, guardian
 import hashlib
 from oath.db.djinn import djinn
+from oath.core import gen_passwd
 
 
 class Test(unittest.TestCase):
@@ -65,8 +66,10 @@ class Test(unittest.TestCase):
         else:
             self.assertRaises(Exception, d.db_connect())
         d.db_connect()
+        d.clear_db()
 
     def test_auth(self):
+        mysecret, myhash = gen_passwd("hello_world")
         pass
 
 if __name__ == "__main__":
