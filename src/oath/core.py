@@ -9,8 +9,7 @@ class keeper():
         pass
 
 
-def gen_passwd(s):
-    secret = secureRandom(20)
+def gen_passwd(s, secret=secureRandom(20)):
     h = hashlib.sha1()
     h.update(secret)
     h.update(s)

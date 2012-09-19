@@ -69,7 +69,7 @@ class Test(unittest.TestCase):
         d.clear_db()
 
     def test_auth(self):
-        mysecret, myhash = gen_passwd("hello_world")
+        print gen_passwd("hello_world")
         pass
 
 if __name__ == "__main__":
